@@ -1,0 +1,88 @@
+services:
+  nginx:
+    container_name: delay_report_system_nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8020:80"
+    volumes:
+      - .:/var/www
+      - .docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - app
+    depends_on:
+      - app
+    networks:
+      - base-network
+
+  app:
+    container_name: delay_report_system_app
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    networks:
+      - base-network
+
+  db:
+    container_name: delay_report_system_db
+    image: mysql:8.0
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3311:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "snapp_food"
+      MYSQL_PASSWORD: "password"
+    volumes:
+      - database:/var/lib/mysql/
+    networks:
+      - base-network
+
+  phpmyadmin:
+    container_name: delay_report_system_pma
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 8021:80
+    environment:
+      MYSQL_USERNAME: "root"
+      MYSQL_ROOT_PASSWORD: "password"
+      PMA_HOST: db
+    networks:
+      - base-network
+    links:
+      - db
+    depends_on:
+      - db
+
+  redis:
+    container_name: delay_report_system_redis
+    image: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./data:/data
+      - .docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+networks:
+  base-network:
+    driver: bridge
+
+volumes:
+  database:
+    driver: local
