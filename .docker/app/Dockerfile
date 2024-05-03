@@ -17,6 +17,8 @@ RUN apt-get install -y \
         unzip \
         gnupg
 
+RUN pecl install redis && docker-php-ext-enable redis
+
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Set working directory
