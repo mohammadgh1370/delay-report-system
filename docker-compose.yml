@@ -81,6 +81,19 @@ services:
     networks:
       - base-network
 
+  db_test:
+    container_name: delay_report_system_db_test
+    image: mysql:8.0
+    restart: unless-stopped
+    tmpfs: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "snapp_food"
+      MYSQL_PASSWORD: "password"
+    networks:
+      - base-network
+
 networks:
   base-network:
     driver: bridge
