@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Agent\OrderController as AgentOrderController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
+use App\Http\Controllers\Panel\OrderController as PanelOrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('user/orders/', [UserOrderController::class, 'create'])
@@ -12,3 +13,6 @@ Route::put('user/{user_id}/orders/{order_id}', [UserOrderController::class, 'del
 
 Route::put('agent/orders/assign', [AgentOrderController::class, 'assign'])
     ->name('agent.orders.assign');
+
+Route::get('panel/orders/report', [PanelOrderController::class, 'report'])
+    ->name('panel.orders.report');

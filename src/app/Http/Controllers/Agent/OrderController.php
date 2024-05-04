@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderAssignRequest;
 use App\Models\Agent;
 use App\Models\User;
 use App\Services\Agent\DelayReport\DelayReportService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function assign(Request $request): JsonResponse
+    public function assign(OrderAssignRequest $request): JsonResponse
     {
         $agent = Agent::query()->firstOrCreate([
             'name' => $request->agent_name,
