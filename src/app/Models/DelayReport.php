@@ -17,7 +17,7 @@ class DelayReport extends Model
     ];
 
     protected $hidden = [
-        'unique_order_id_agent_id_checked_at_md5'
+        'unique_order_id_agent_id_checked_at_md5',
     ];
 
     public function order(): BelongsTo

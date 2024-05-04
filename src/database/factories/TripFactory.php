@@ -14,11 +14,9 @@ class TripFactory extends Factory
 {
     public function definition(): array
     {
-        $order = Order::factory()->create();
-
         return [
             'delivery_id' => User::factory(),
-            'order_id' => $order,
+            'order_id' => Order::factory(),
             'status' => TripStatus::ASSIGNED,
             'delivered_at' => null,
         ];

@@ -1,8 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Agent\OrderController as AgentOrderController;
+use App\Http\Controllers\User\OrderController as UserOrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::post('user/orders/', [UserOrderController::class, 'create'])
+    ->name('user.orders.create');
+
+Route::put('user/{user_id}/orders/{order_id}', [UserOrderController::class, 'delayReport'])
+    ->name('user.orders.delay-report');
+
+Route::put('agent/orders/assign', [AgentOrderController::class, 'assign'])
+    ->name('agent.orders.assign');
