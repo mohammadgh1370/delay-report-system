@@ -1,6 +1,5 @@
 ### How to run project
-> docker compose build
-> docker compose up -d
+> make project-up
 
 APIs:
 🔴 create order sample(just for test):
@@ -14,6 +13,13 @@ put: api/user/{user_id}/orders/{order_id} body:{}
 
 🔴 agent request to assign report to own:
 put: api/agent/orders/assign body:{agent_name: "test"}
+- name of agent
 
 🔴 panel list of delay reports of vendor:
 get: api/panel/orders/report body:{}
+
+### Test API swagger
+> http://localhost:8020/api/documentation
+
+### Run Project Test
+> docker compose exec app php artisan test
