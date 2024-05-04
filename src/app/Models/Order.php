@@ -39,4 +39,9 @@ class Order extends Model
     {
         return $this->hasMany(DelayReport::class);
     }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(OrderLog::class);
+    }
 }
