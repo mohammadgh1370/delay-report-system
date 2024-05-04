@@ -27,7 +27,7 @@ class CheckTrip implements DelayReportInterface
 
             $this->orderRepository->update([
                 'estimate_delivered_at' => now()->addMinutes($estimateTime),
-            ], $content->getOrderId());
+            ], $content->getOrder());
 
             $content->setMessage('Estimate delivered update and sending order for you.');
 

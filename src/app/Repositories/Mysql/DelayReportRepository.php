@@ -42,10 +42,11 @@ class DelayReportRepository extends BaseRepository implements DelayReportReposit
             ->first();
     }
 
-    public function update(array $data, int $id): void
+    public function update(array $data, DelayReport $delayReport): DelayReport
     {
-        $this->query
-            ->where('id', $id)
-            ->update($data);
+        $delayReport->fill($data);
+        $delayReport->save();
+
+        return $delayReport;
     }
 }

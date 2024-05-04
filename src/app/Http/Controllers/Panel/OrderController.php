@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Panel\VendorResource;
 use App\Repositories\OrderRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
@@ -16,6 +17,8 @@ class OrderController extends Controller
     {
         $list = $this->orderRepository->getVendorsGroupByDelayInMinutes();
 
-        return response()->json($list);
+        $data = VendorResource::collection($list);
+
+        return response()->json($data);
     }
 }

@@ -21,9 +21,9 @@ class AssignDelayReport implements DelayReportInterface
             DelayReportException::dontExistAnyDelayReport();
         }
 
-        $this->delayReportRepository->update([
+        $delayReport = $this->delayReportRepository->update([
             'agent_id' => $content->getAgentId(),
-        ], $delayReport->id);
+        ], $delayReport);
 
         $content->setDelayReport($delayReport);
 

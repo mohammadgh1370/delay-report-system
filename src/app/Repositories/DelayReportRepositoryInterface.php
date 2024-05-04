@@ -14,5 +14,5 @@ interface DelayReportRepositoryInterface
 
     public function findByAgentIdNullAndCheckedAtNullAndOrderByCreatedAt(): ?DelayReport;
 
-    public function update(array $data, int $id): void;
+    public function update(array $data, DelayReport $delayReport): DelayReport;
 }

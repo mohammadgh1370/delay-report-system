@@ -4,7 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Enums\TripStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderCreateRequest;
+use App\Http\Requests\User\OrderCreateRequest;
+use App\Http\Resources\User\OrderResource;
 use App\Models\Order;
 use App\Models\Trip;
 use App\Models\User;
@@ -37,11 +38,9 @@ class OrderController extends Controller
                 ->create();
         }
 
-        return response()->json([
-            'user_id' => $order->user_id,
-            'order_id' => $order->id,
-            'estimate_delivered_at' => $order->estimate_delivered_at,
-        ]);
+        $data = new OrderResource($order);
+
+        return response()->json($data);
     }
 
     public function delayReport(int $userId, int $orderId): JsonResponse

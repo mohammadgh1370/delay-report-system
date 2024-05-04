@@ -24,11 +24,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->first();
     }
 
-    public function update(array $data, int $id): void
+    public function update(array $data, Order $order): Order
     {
-        $this->query
-            ->where('id', $id)
-            ->update($data);
+        $order->fill($data);
+        $order->save();
+
+        return $order;
     }
 
     public function getVendorsGroupByDelayInMinutes(): Collection

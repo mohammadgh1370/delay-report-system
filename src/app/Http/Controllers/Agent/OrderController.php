@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderAssignRequest;
+use App\Http\Requests\Agent\OrderAssignRequest;
+use App\Http\Resources\Agent\DelayReportResource;
 use App\Models\Agent;
 use App\Models\User;
 use App\Services\Agent\DelayReport\DelayReportService;
@@ -21,6 +22,8 @@ class OrderController extends Controller
 
         $delayReport = resolve(DelayReportService::class)->handle($agent->id);
 
-        return response()->json($delayReport->toArray() ?? []);
+        $data = new DelayReportResource($delayReport);
+
+        return response()->json($data);
     }
 }
