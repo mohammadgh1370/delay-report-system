@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\TripStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderCreateRequest;
 use App\Models\Order;
@@ -26,14 +27,20 @@ class OrderController extends Controller
                 'estimate_delivered_at' => Carbon::parse($request->created_at)->addMinutes($request->delivery_time)->toDateTimeString(),
             ]);
 
-        if ($request->assign_trip) {
-            Trip::factory()->for($order)->create();
+        if ($request->trip_status) {
+            Trip::factory()
+                ->state([
+                    'delivered_at' => TripStatus::tryFrom($request->trip_status) === TripStatus::DELIVERED ? now() : null,
+                    'status' => $request->trip_status
+                ])
+                ->for($order)
+                ->create();
         }
 
         return response()->json([
             'user_id' => $order->user_id,
             'order_id' => $order->id,
-            'delivery_at' => $order->estimate_delivered_at,
+            'estimate_delivered_at' => $order->estimate_delivered_at,
         ]);
     }
 

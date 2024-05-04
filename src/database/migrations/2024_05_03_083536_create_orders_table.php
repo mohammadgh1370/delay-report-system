@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Vendor::class)->constrained();
             $table->string('name');
             $table->unsignedTinyInteger('delivery_time')->comment('in minutes');
-            $table->timestamp('estimate_delivered_at');
+            $table->timestamp('estimate_delivered_at')->comment('just for show to user');
             $table->timestamps();
         });
     }

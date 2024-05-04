@@ -15,7 +15,7 @@ class DelayReportContent
 
     public function __construct(
         private int $orderId,
-        private ?int $userId = null,
+        private int $userId,
     ) {
     }
 
@@ -24,7 +24,7 @@ class DelayReportContent
         return $this->orderId;
     }
 
-    public function getUserId(): ?int
+    public function getUserId(): int
     {
         return $this->userId;
     }

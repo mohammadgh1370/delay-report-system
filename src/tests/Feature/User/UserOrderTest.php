@@ -26,7 +26,7 @@ class UserOrderTest extends TestCase
         $response->assertJsonStructure([
             'user_id',
             'order_id',
-            'delivery_at',
+            'estimate_delivered_at',
         ]);
     }
 
