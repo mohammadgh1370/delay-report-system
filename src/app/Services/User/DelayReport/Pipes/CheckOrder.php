@@ -3,18 +3,19 @@
 namespace App\Services\User\DelayReport\Pipes;
 
 use App\Exceptions\OrderException;
-use App\Models\Order;
+use App\Repositories\OrderRepositoryInterface;
 use App\Services\User\DelayReport\DelayReportContent;
 use App\Services\User\DelayReport\DelayReportInterface;
 
 class CheckOrder implements DelayReportInterface
 {
+    public function __construct(private OrderRepositoryInterface $orderRepository)
+    {
+    }
+
     public function handle(DelayReportContent $content, \Closure $next)
     {
-        $order = Order::query()
-            ->where('id', $content->getOrderId())
-            ->where('user_id', $content->getUserId())
-            ->first();
+        $order = $this->orderRepository->findByIdAndUserId($content->getOrderId(), $content->getUserId());
 
         if (! $order) {
             OrderException::notFound();

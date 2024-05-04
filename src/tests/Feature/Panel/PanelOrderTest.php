@@ -31,13 +31,13 @@ class PanelOrderTest extends TestCase
             )
             ->has(
                 Trip::factory()
-                ->sequence(
-                    ['delivered_at' => now()->subDay()->hour(12)->minute(10), 'status' =>TripStatus::DELIVERED],
-                    ['delivered_at' => now()->subDay()->hour(12)->minute(15), 'status' =>TripStatus::DELIVERED],
-                    ['delivered_at' => now()->subDay()->hour(12)->minute(20), 'status' =>TripStatus::DELIVERED],
-                    ['delivered_at' => now()->subDay()->hour(12)->minute(25), 'status' =>TripStatus::DELIVERED],
-                    ['delivered_at' => now()->subDay()->hour(12)->minute(30), 'status' =>TripStatus::DELIVERED],
-                )
+                    ->sequence(
+                        ['delivered_at' => now()->subDay()->hour(12)->minute(10), 'status' => TripStatus::DELIVERED],
+                        ['delivered_at' => now()->subDay()->hour(12)->minute(15), 'status' => TripStatus::DELIVERED],
+                        ['delivered_at' => now()->subDay()->hour(12)->minute(20), 'status' => TripStatus::DELIVERED],
+                        ['delivered_at' => now()->subDay()->hour(12)->minute(25), 'status' => TripStatus::DELIVERED],
+                        ['delivered_at' => now()->subDay()->hour(12)->minute(30), 'status' => TripStatus::DELIVERED],
+                    )
             )
             ->count(5)
             ->create();
