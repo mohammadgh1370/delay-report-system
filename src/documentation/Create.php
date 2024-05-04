@@ -6,10 +6,14 @@ namespace Documentation;
  * @OA\Post(
  *     path="/api/user/orders",
  *     tags={"User"},
+ *
  *     @OA\RequestBody(
+ *
  *         @OA\MediaType(
  *             mediaType="application/json",
+ *
  *             @OA\Schema(
+ *
  *                 @OA\Property(
  *                      type="object",
  *                      @OA\Property(
@@ -38,11 +42,14 @@ namespace Documentation;
  *             )
  *         )
  *      ),
+ *
  *      @OA\Response(
  *          response=200,
  *          description="Success",
+ *
  *          @OA\JsonContent(
  *              anyOf={
+ *
  *                  @OA\Property(type="object",
  *                      @OA\Property(property="user_id", type="number", example=1),
  *                      @OA\Property(property="order_id", type="number", example=1),
@@ -51,15 +58,17 @@ namespace Documentation;
  *              }
  *          )
  *      ),
+ *
  *      @OA\Response(
  *          response=422,
  *          description="Validation error",
+ *
  *          @OA\JsonContent(
+ *
  *              @OA\Property(property="message", type="string", example="The name field is required. (and 2 more errors)"),
  *          )
  *      )
  * )
- */class Create
+ */ class Create
 {
-
 }

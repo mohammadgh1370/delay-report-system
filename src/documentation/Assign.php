@@ -6,10 +6,14 @@ namespace Documentation;
  * @OA\Put(
  *     path="/api/agent/orders/assign",
  *     tags={"Agent"},
+ *
  *     @OA\RequestBody(
+ *
  *         @OA\MediaType(
  *             mediaType="application/json",
+ *
  *             @OA\Schema(
+ *
  *                 @OA\Property(
  *                      type="object",
  *                      @OA\Property(
@@ -23,11 +27,14 @@ namespace Documentation;
  *             )
  *         )
  *      ),
+ *
  *      @OA\Response(
  *          response=200,
  *          description="Success",
+ *
  *          @OA\JsonContent(
  *              anyOf={
+ *
  *                  @OA\Property(type="object",
  *                      @OA\Property(property="id", type="number", example=1),
  *                      @OA\Property(property="order_id", type="number", example="John"),
@@ -38,10 +45,13 @@ namespace Documentation;
  *              }
  *          )
  *      ),
+ *
  *      @OA\Response(
  *          response=400,
  *          description="Success",
+ *
  *          @OA\JsonContent(
+ *
  *              @OA\Property(property="message", type="string", example="Dont exist any delay report to assign."),
  *          )
  *      ),
@@ -49,5 +59,4 @@ namespace Documentation;
  */
 class Assign
 {
-
 }

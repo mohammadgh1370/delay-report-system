@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\User;
 
+use App\Enums\TripStatus;
 use App\Models\DelayReport;
 use App\Models\Order;
 use App\Models\Trip;
@@ -55,7 +56,7 @@ class UserOrderTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function test_delay_report_update_delivery_time_because_trip_not_delivered()
+    public function test_delay_report_update_estimate_delivered_at_because_trip_not_delivered()
     {
         $order = Order::factory()
             ->state(['estimate_delivered_at' => now()->subMinutes(5)])
@@ -77,13 +78,40 @@ class UserOrderTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('delay_reports', ['order_id' => $order->id, 'checked_at' => null]);
+        $this->assertDatabaseHas('orders', ['estimate_delivered_at' => $order->estimate_delivered_at]);
     }
 
-    public function test_delay_report_create_because_order_deliver_time_past_and_not_receive_to_user()
+    public function test_delay_report_create_because_order_deliver_time_past_and_not_receive_to_user_with_trip_assigned_status()
     {
         $order = Order::factory()
             ->state(['estimate_delivered_at' => now()->subMinutes(5)])
-            ->has(Trip::factory())
+            ->has(Trip::factory()->state(['status' => TripStatus::ASSIGNED]))
+            ->create();
+
+        $response = $this->putJson(route('user.orders.delay-report', ['user_id' => $order->user_id, 'order_id' => $order->id]));
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('delay_reports', ['order_id' => $order->id, 'checked_at' => null]);
+    }
+
+    public function test_delay_report_create_because_order_deliver_time_past_and_not_receive_to_user_with_trip_at_vendor_status()
+    {
+        $order = Order::factory()
+            ->state(['estimate_delivered_at' => now()->subMinutes(5)])
+            ->has(Trip::factory()->state(['status' => TripStatus::AT_VENDOR]))
+            ->create();
+
+        $response = $this->putJson(route('user.orders.delay-report', ['user_id' => $order->user_id, 'order_id' => $order->id]));
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('delay_reports', ['order_id' => $order->id, 'checked_at' => null]);
+    }
+
+    public function test_delay_report_create_because_order_deliver_time_past_and_not_receive_to_user_with_trip_at_picked_status()
+    {
+        $order = Order::factory()
+            ->state(['estimate_delivered_at' => now()->subMinutes(5)])
+            ->has(Trip::factory()->state(['status' => TripStatus::PICKED]))
             ->create();
 
         $response = $this->putJson(route('user.orders.delay-report', ['user_id' => $order->user_id, 'order_id' => $order->id]));

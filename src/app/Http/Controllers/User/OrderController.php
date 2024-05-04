@@ -32,7 +32,7 @@ class OrderController extends Controller
             Trip::factory()
                 ->state([
                     'delivered_at' => TripStatus::tryFrom($request->trip_status) === TripStatus::DELIVERED ? now() : null,
-                    'status' => $request->trip_status
+                    'status' => $request->trip_status,
                 ])
                 ->for($order)
                 ->create();
